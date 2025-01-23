@@ -1,0 +1,21 @@
+[firefly]
+# The address of the Firefly server
+address = "http://localhost:8080"
+# The name to use for the asset account in Firefly
+account = "stocks"
+# Personal access token created on the Firefly server
+token = "1234567890abcdef1234567890abcdef12345678"
+
+[api]
+# The token for the EOD Historical API
+# You can create a free account at https://eodhd.com/
+token = "893j3d83hd8392h.fjdi39f3"
+
+[stocks]
+# A list of positions to track, along with the number of units of each position
+# The format for the position is "<symbol>.<exchange>"
+positions = [
+    ["AAPL.US", 3],
+    ["GOOGL.SN", 7],
+    ["AMZN.XETRA", 1]
+]
