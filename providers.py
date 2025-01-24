@@ -1,8 +1,7 @@
-import tomllib
-import requests
-
-from decimal import Decimal
 from datetime import datetime
+from decimal import Decimal
+
+import requests
 
 
 class EODHDProvider:

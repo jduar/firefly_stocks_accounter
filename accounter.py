@@ -1,7 +1,9 @@
-import tomllib
-from providers import EODHDProvider, FireflyProvider
-
 from decimal import Decimal
+
+import tomllib
+from requests.exceptions import ConnectionError, HTTPError
+
+from providers import EODHDProvider, FireflyProvider
 
 with open("settings.toml", "rb") as f:
     config = tomllib.load(f)
@@ -11,13 +13,34 @@ firefly_provider = FireflyProvider(config)
 
 
 def main():
-    print("**********")
+    print("********** Firefly Stocks Accounter\n")
+
+    # Ensure the connection to Firefly is working before advancing to avoid wasting EODHD API calls
+    check_firefly_connection()
 
     stocks_balance = get_stock_accounts_balance()
     update_firefly_stocks_account(config["firefly"]["account"], stocks_balance)
 
     used_tokens, daily_limit, extraLimits = eodhd_provider.get_api_calls_info()
     print(f"\nAvailable API tokens: {daily_limit-used_tokens+extraLimits}")
+
+
+def check_firefly_connection():
+    try:
+        firefly_provider.get_system_information()
+    except HTTPError as http_err:
+        if http_err.response.status_code == 401:
+            print(
+                "** Unauthorized connection to Firefly server. Check your configured personal access token."
+            )
+        else:
+            print(http_err)
+        exit()
+    except ConnectionError as connection_err:
+        print(
+            f"** Unable to connect to the Firefly server. Check your settings.\n\nError detail: {connection_err}"
+        )
+        exit()
 
 
 def get_stock_accounts_balance() -> Decimal:
