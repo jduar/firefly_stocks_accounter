@@ -12,4 +12,12 @@ This isn't meant to replace your favourite brokers's investment app/website or t
 
 * Create an account at https://eodhd.com/ and retrieve your API token.
 * Copy `settings.example.toml` into `settings.toml` and adjust the settings - the parameters are explained in the settings file itself.
+* Install the python dependencies:
+
+```
+$ python -m venv venv
+$ source venv/bin/activate
+$ pip install -r requirements.txt
+```
+
 * Run the script with `python accounter.py` or set up a cronjob to run it periodically.
