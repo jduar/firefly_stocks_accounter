@@ -21,8 +21,8 @@ def main():
     stocks_balance = get_stock_accounts_balance()
     update_firefly_stocks_account(config["firefly"]["account"], stocks_balance)
 
-    used_tokens, daily_limit, extraLimits = eodhd_provider.get_api_calls_info()
-    print(f"\nAvailable API tokens: {daily_limit-used_tokens+extraLimits}")
+    used_tokens, daily_limit, extra_limits = eodhd_provider.get_api_calls_info()
+    print(f"\nAvailable daily API tokens: {used_tokens}/{daily_limit}. Extra tokens: {extra_limits}.")
 
 
 def check_firefly_connection():
